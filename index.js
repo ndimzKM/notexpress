@@ -13,7 +13,8 @@ app.get('/hello', (req,res) => {
 
 app.post('/hi', (req,res) => {
   console.log('Post HI');
-  res.end("HI POST REQUEST")
+  res.status(201).json({ message: "Hello" })
+  //res.json({message: "Hello"})
 })
 
 app.listen(4000, () => {

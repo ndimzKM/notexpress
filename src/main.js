@@ -1,4 +1,5 @@
 const http = require('http')
+const response = require('./response')
 
 function NotExpress(){
   let middleware = [];
@@ -65,6 +66,7 @@ function NotExpress(){
 
   function listen(port, cb){
     return http.createServer((req,res) => {
+      response(res)
       requestHandler(req,res)
     }).listen(port, () => {
       if(cb instanceof Function) return cb()
