@@ -1,3 +1,2 @@
 # notexpress
-A small NodeJS framework based on Express
-
+A small NodeJS framework that is not a replacement of ExpressJS
