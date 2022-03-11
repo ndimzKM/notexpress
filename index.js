@@ -2,6 +2,10 @@ const NotExpress = require('./src/main');
 
 const app = NotExpress()
 
+app.use("/hello", (req,res) => {
+  console.log('This is app.use()')
+})
+
 app.get('/hello', (req,res) => {
   console.log('HI')
   res.end("Hi")

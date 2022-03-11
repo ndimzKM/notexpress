@@ -3,6 +3,18 @@ const http = require('http')
 function NotExpress(){
   let middleware = [];
 
+  function use(path = "*", cb){
+    if(!cb){
+      cb = path
+      path = "*"
+    }
+    middleware.push({
+      method: null,
+      path,
+      cb
+    })
+  }
+
   function get(path, cb){
     middleware.push({
       method: 'GET',
@@ -25,15 +37,29 @@ function NotExpress(){
     return false;
   }
 
+  function getUseMethods(){
+    return middleware.filter(m => m.method === null);
+  }
+
   function requestHandler(req, res){
     //console.log(req.method, req.url)
     //middleware[0].cb(req,res);
     //console.log(middleware)
     const current = getMiddleware(req.url, req.method);
+    const useMethods = getUseMethods()
     if(current === false){
       throw new Error('Route or method not found');
     }
 
+    for(let use of useMethods){
+      if(use.path === "*"){
+        use.cb(req,res)
+      }else if(use.path === current.path){
+        use.cb(req,res)
+      }else{
+        continue
+      }
+    }
     return current.cb(req,res)
   }
 
@@ -49,7 +75,8 @@ function NotExpress(){
   return {
     listen,
     get,
-    post
+    post,
+    use
   }
 }
 
