@@ -70,7 +70,9 @@ function NotExpress(){
       requestHandler(req,res)
     }).listen(port, () => {
       if(cb instanceof Function) return cb()
-      throw new Error("You need to pass a callback")
+      else{
+        console.log('Server started')
+      }
     })
   }
 

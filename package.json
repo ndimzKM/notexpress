@@ -5,5 +5,12 @@
   "main": "index.js",
   "repository": "git@github-ndimzKM:ndimzKM/notexpress.git",
   "author": "Alieu Ndimbalane <alieundimbalane@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha ./tests/notexpress.js"
+  },
+  "devDependencies": {
+    "mocha": "^9.2.2",
+    "supertest": "^6.2.2"
+  }
 }
