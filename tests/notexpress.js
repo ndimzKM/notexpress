@@ -2,8 +2,10 @@ const assert = require('assert');
 const supertest = require('supertest')
 const NotExpress = require('../src/main');
 
+/*
 const app = NotExpress()
 app.listen(4000)
+*/
 
 describe('App', () => {
   it('should be able to create instance', done => {
