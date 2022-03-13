@@ -1,4 +1,5 @@
 const http = require('http')
+const request = require('./request')
 const response = require('./response')
 
 function NotExpress(){
@@ -61,11 +62,20 @@ function NotExpress(){
         continue
       }
     }
-    return current.cb(req,res)
+    req.body.then(data => {
+      req.body = data;
+      return current.cb(req,res);
+    })
+    /*
+    req.body.then(data => {
+      return current.cb(req,res)
+    })*/
+    //return current.cb(req,res)
   }
 
   function listen(port, cb){
     return http.createServer((req,res) => {
+      request(req)
       response(res)
       requestHandler(req,res)
     }).listen(port, () => {

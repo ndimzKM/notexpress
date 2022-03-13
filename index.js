@@ -12,7 +12,7 @@ app.get('/hello', (req,res) => {
 })
 
 app.post('/hi', (req,res) => {
-  console.log('Post HI');
+  console.log(req.body.name);
   res.status(201).json({ message: "Hello" })
   //res.json({message: "Hello"})
 })
@@ -21,4 +21,3 @@ app.listen(4000, () => {
   console.log(`Server running on port 4000`)
 })
 
-module.exports = app;
