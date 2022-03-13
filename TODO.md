@@ -1,7 +1,7 @@
 # Features to implement
 1. req.headers
 2. req.param
-3. req.body
+3. req.body [DONE]
 
 4. res.json [DONE]
 5. res.status [DONE]
