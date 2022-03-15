@@ -13,6 +13,7 @@ app.get('/hello', (req,res) => {
 
 app.post('/hi', (req,res) => {
   console.log(req.body.name);
+  console.log(req.params.message)
   res.status(201).json({ message: "Hello" })
   //res.json({message: "Hello"})
 })

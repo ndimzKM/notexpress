@@ -34,6 +34,9 @@ function NotExpress(){
   }
 
   function getMiddleware(path, method){
+    if(path.includes('?')){
+      path = path.split('?')[0]
+    }
     let middle = middleware.find(m => m.path === path && m.method === method);
     if(middle) return middle;
     return false;
@@ -50,22 +53,24 @@ function NotExpress(){
     const current = getMiddleware(req.url, req.method);
     const useMethods = getUseMethods()
     if(current === false){
-      throw new Error('Route or method not found');
+      res.status(404).json({
+        message:"Route not found"
+      })
+    } else{
+        for(let use of useMethods){
+          if(use.path === "*"){
+            use.cb(req,res)
+          }else if(use.path === current.path){
+            use.cb(req,res)
+          }else{
+            continue
+          }
+        }
+        req.body.then(data => {
+        req.body = data;
+        return current.cb(req,res);
+      })
     }
-
-    for(let use of useMethods){
-      if(use.path === "*"){
-        use.cb(req,res)
-      }else if(use.path === current.path){
-        use.cb(req,res)
-      }else{
-        continue
-      }
-    }
-    req.body.then(data => {
-      req.body = data;
-      return current.cb(req,res);
-    })
     /*
     req.body.then(data => {
       return current.cb(req,res)
