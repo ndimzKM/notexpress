@@ -1,12 +1,18 @@
 {
   "name": "@ndimz/notexpress",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A small NodeJS framework based on Express",
   "main": "./src/main.js",
   "repository": "git@github-ndimzKM:ndimzKM/notexpress.git",
   "author": "Alieu Ndimbalane <alieundimbalane@gmail.com>",
   "license": "MIT",
-  "keywords": ["notexpress", "nodejs", "backend", "backend framework", "express"],
+  "keywords": [
+    "notexpress",
+    "nodejs",
+    "backend",
+    "backend framework",
+    "express"
+  ],
   "scripts": {
     "test": "./node_modules/.bin/mocha ./tests/notexpress.js",
     "start": "nodemon index.js"
