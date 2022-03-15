@@ -6,6 +6,7 @@
   "repository": "git@github-ndimzKM:ndimzKM/notexpress.git",
   "author": "Alieu Ndimbalane <alieundimbalane@gmail.com>",
   "license": "MIT",
+  "keywords": ["notexpress", "nodejs", "backend", "backend framework", "express"],
   "scripts": {
     "test": "./node_modules/.bin/mocha ./tests/notexpress.js",
     "start": "nodemon index.js"
