@@ -6,7 +6,7 @@
 4. res.json [DONE]
 5. res.status [DONE]
 6. res.send [DONE]
-7. res.sendFile
+7. res.sendFile [DONE]
 8. res.download
 9. res.cookie (may be)
 10. res.render(may be)
