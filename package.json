@@ -1,5 +1,5 @@
 {
-  "name": "notexpress",
+  "name": "@ndimz/notexpress",
   "version": "1.0.0",
   "description": "A small NodeJS framework based on Express",
   "main": "./src/main.js",
