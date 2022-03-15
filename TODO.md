@@ -1,6 +1,6 @@
 # Features to implement
 1. req.headers
-2. req.param
+2. req.params [DONE]
 3. req.body [DONE]
 
 4. res.json [DONE]

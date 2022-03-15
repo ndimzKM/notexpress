@@ -11,7 +11,13 @@ async function parseReqBody(req){
     buffers.push(chunk);
   }
   const data = Buffer.concat(buffers).toString()
-  return JSON.parse(data);
+  let returnVal = undefined
+  try{
+    returnVal = JSON.parse(data)
+  }catch(err){
+    returnVal = undefined
+  }
+  return returnVal;
 }
 
 function parseParams(req){

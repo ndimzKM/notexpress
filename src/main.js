@@ -1,3 +1,4 @@
+const path = require('path')
 const http = require('http')
 const request = require('./request')
 const response = require('./response')
@@ -79,9 +80,10 @@ function NotExpress(){
   }
 
   function listen(port, cb){
+    let publicFolder = NotExpress.prototype.public
     return http.createServer((req,res) => {
       request(req)
-      response(res)
+      response(res, publicFolder)
       requestHandler(req,res)
     }).listen(port, () => {
       if(cb instanceof Function) return cb()
@@ -97,6 +99,10 @@ function NotExpress(){
     post,
     use
   }
+}
+
+NotExpress.prototype.static = function(dirname){
+  NotExpress.prototype.public = path.join(__dirname, '../',dirname);
 }
 
 module.exports = NotExpress

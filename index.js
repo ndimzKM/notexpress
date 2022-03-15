@@ -1,6 +1,7 @@
 const NotExpress = require('./src/main');
 
 const app = NotExpress()
+//NotExpress.prototype.static('public')
 
 app.use("/hello", (req,res) => {
   console.log('This is app.use()')
@@ -16,6 +17,10 @@ app.post('/hi', (req,res) => {
   console.log(req.params.message)
   res.status(201).json({ message: "Hello" })
   //res.json({message: "Hello"})
+})
+
+app.get('/file', (req,res) => {
+  res.sendFile('./index.html')
 })
 
 app.listen(4000, () => {
