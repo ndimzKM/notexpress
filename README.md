@@ -9,7 +9,7 @@
 A small NodeJS framework that is not a replacement of ExpressJS. Just like Express.js, it is unopinionated and minimal and contains over 80% of the features in Express.js
 
 ```
-const notexpress = require('notexpress')
+const notexpress = require('@ndimz/notexpress')
 const app = notexpress()
 
 app.get('/', function (req, res) {
