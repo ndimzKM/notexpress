@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "test": "./node_modules/.bin/mocha ./tests/notexpress.js",
-    "start": "nodemon index.js"
+    "start": "nodemon example.js"
   },
   "devDependencies": {
     "mocha": "^9.2.2",
