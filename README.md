@@ -24,7 +24,13 @@ The only requirement to use notexpress is that you have Node.js installed.
 ```bash
   npm install @ndimz/notexpress
 ```
-    
+
+## Features
+
+- ⚙ Express middleware compatible
+- 🚀 No legacy dependencies, just the JavaScript itself
+- 📦 Lesser bundle size than Express
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
