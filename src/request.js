@@ -1,4 +1,3 @@
-
 function request(req){
   req.body = parseReqBody(req)
   req.params = parseParams(req)

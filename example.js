@@ -7,6 +7,7 @@ app.use("/hello", (req,res) => {
   console.log('This is app.use()')
 })
 
+// next param is apparently useless right now
 function testMid(req,res,next){
   console.log(req.body)
 }
@@ -19,7 +20,6 @@ app.post('/hi', (req,res) => {
   console.log(req.body.name);
   console.log(req.params.message)
   res.status(201).json({ message: "Hello" })
-  //res.json({message: "Hello"})
 })
 
 app.delete('/delete', (req,res) => {
