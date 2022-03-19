@@ -6,7 +6,7 @@
 ![Version](https://img.shields.io/npm/v/@ndimz/notexpress)
 # notexpress
 
-A small NodeJS framework that is not a replacement of ExpressJS. Just like Express.js, it is unopinionated and minimal and contains over 80% of the features in Express.js
+A small NodeJS framework that is not a replacement of ExpressJS. Just like Express.js, it is unopinionated and minimal and contains less than 30% of the features in Express.js. I only hope the percentage will increase.
 
 ```
 const notexpress = require('@ndimz/notexpress')
@@ -24,6 +24,10 @@ The only requirement to use notexpress is that you have Node.js installed.
 ```bash
   npm install @ndimz/notexpress
 ```
+
+## Disclaimer ⚠️
+
+This entire project is just a __POK__, __Proof of Knowledge__. If that's even a thing. I am merely experimenting my knowledge of Node.js, thereby attempting to build my own Express. Most of the things you can do with Express are __not yet__ doable. But hopefully, I will fully implement them.
 
 ## Features
 
