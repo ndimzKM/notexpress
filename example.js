@@ -2,6 +2,8 @@ const NotExpress = require('./src/main');
 
 const app = NotExpress()
 //NotExpress.prototype.static('public')
+app.set("views", __dirname + "/views");
+app.set("view engine", "ejs");
 
 app.use("/hello", (req,res) => {
   console.log('This is app.use()')
@@ -11,6 +13,10 @@ app.use("/hello", (req,res) => {
 function testMid(req,res,next){
   console.log(req.body)
 }
+
+app.get('/ejs', (req,res) => {
+  res.render('test')
+})
 
 app.get('/hello', testMid ,(req,res) => {
   console.log('HI')

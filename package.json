@@ -21,5 +21,6 @@
     "mocha": "^9.2.2",
     "nodemon": "^2.0.15",
     "supertest": "^6.2.2"
-  }
+  },
+  "dependencies": {}
 }

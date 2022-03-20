@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 
-function response(res, publicFolder) {
+function response(res, publicFolder, globals) {
   res.json = function(data){
     if(typeof data !== "object") throw new Error("You must pass an object to res.json")
     res.setHeader('Content-Type', 'application/json');
@@ -14,6 +14,30 @@ function response(res, publicFolder) {
   res.status = function(code){
     res.statusCode = Number(code)
     return res;
+  }
+  res.render = function(filename, params = {people: ['al','bl']}){
+    if(globals.views && globals['view engine'] == 'ejs'){
+      let filepath = path.join(globals.views, filename+'.ejs')
+      try{
+        const ejs = require('ejs')
+
+        res.setHeader('Content-Type', 'text/html')
+        res.statusCode = 200
+
+        const html = ejs.renderFile(filepath, params, {},(err,str) => {
+          if(err) throw err
+          else{
+            res.setHeader('Content-Length', str.length);
+            res.send(str)
+          }
+        })
+        res.send(html)
+      }catch(error){
+        throw error
+      }
+    }else{
+      throw new Error("default view not set or unsupported view engine.")
+    }
   }
   res.sendFile = function(filepath){
     if(path.extname(filepath) != '.html' || path.extname(filepath) != '.html'){

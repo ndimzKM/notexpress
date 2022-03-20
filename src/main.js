@@ -6,6 +6,14 @@ const { parseMiddleware } = require('../lib/utils')
 
 function NotExpress(){
   let middlewares = [];
+  let globals = {
+    views: "",
+    "view engine": ""
+  };
+
+  function set(key, value){
+    globals = { ...globals, [key]: value };
+  }
 
   function use(...args){
     let middleware = parseMiddleware(args)
@@ -123,7 +131,7 @@ function NotExpress(){
     let publicFolder = NotExpress.prototype.public
     return http.createServer((req,res) => {
       request(req)
-      response(res, publicFolder)
+      response(res, publicFolder, globals)
       requestHandler(req,res)
     }).listen(port, () => {
       if(cb instanceof Function) return cb()
@@ -139,7 +147,8 @@ function NotExpress(){
     post,
     put,
     delete: deleteMethod,
-    use
+    use,
+    set
   }
 }
 
