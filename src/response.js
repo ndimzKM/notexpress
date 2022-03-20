@@ -31,7 +31,6 @@ function response(res, publicFolder, globals) {
             res.send(str)
           }
         })
-        res.send(html)
       }catch(error){
         throw error
       }
