@@ -16,21 +16,32 @@ function response(res, publicFolder, globals) {
     return res;
   }
   res.render = function(filename, params = {people: ['al','bl']}){
-    if(globals.views && globals['view engine'] == 'ejs'){
-      let filepath = path.join(globals.views, filename+'.ejs')
+    if(globals.views){
+      let filepath;
       try{
-        const ejs = require('ejs')
-
-        res.setHeader('Content-Type', 'text/html')
-        res.statusCode = 200
-
-        const html = ejs.renderFile(filepath, params, {},(err,str) => {
-          if(err) throw err
-          else{
-            res.setHeader('Content-Length', str.length);
-            res.send(str)
-          }
-        })
+        if(globals['view engine'] == 'ejs'){
+          filepath = path.join(globals.views, filename+'.ejs')
+          const ejs = require('ejs')
+          const html = ejs.renderFile(filepath, params, {},(err,str) => {
+            if(err) throw err
+            else{
+              res.setHeader('Content-Type', 'text/html')
+              res.statusCode = 200;
+              res.setHeader('Content-Length', str.length);
+            
+              res.send(str)
+            }
+          })
+        }else if(globals['view engine'] == 'pug'){
+          filepath = path.join(globals.views, filename+'.pug')
+          // render for pug
+        }else if(globals['view engine'] == 'handlebars'){
+          filepath = path.join(globals.views, filename+'.handlebars')
+          // render for handlebars
+        }else{
+          throw new Error("template engine not supported or not specified")
+        }
+        
       }catch(error){
         throw error
       }
