@@ -1,10 +1,10 @@
 {
   "name": "@ndimz/notexpress",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A small NodeJS framework based on Express",
   "main": "./src/main.js",
   "repository": {
-    "type":"git",
+    "type": "git",
     "url": "https://github.com/ndimzKM/notexpress.git"
   },
   "author": "Alieu Ndimbalane <alieundimbalane@gmail.com>",
