@@ -3,7 +3,10 @@
   "version": "1.0.5",
   "description": "A small NodeJS framework based on Express",
   "main": "./src/main.js",
-  "repository": "git@github-ndimzKM:ndimzKM/notexpress.git",
+  "repository": {
+    "type":"git",
+    "url": "https://github.com/ndimzKM/notexpress.git"
+  },
   "author": "Alieu Ndimbalane <alieundimbalane@gmail.com>",
   "license": "MIT",
   "keywords": [
