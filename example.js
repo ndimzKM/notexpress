@@ -3,7 +3,7 @@ const NotExpress = require('./src/main');
 const app = NotExpress()
 //NotExpress.prototype.static('public')
 app.set("views", __dirname + "/views");
-app.set("view engine", "ejs");
+app.set("view engine", "pug");
 
 app.use("/hello", (req,res) => {
   console.log('This is app.use()')

@@ -34,10 +34,19 @@ function response(res, publicFolder, globals) {
           })
         }else if(globals['view engine'] == 'pug'){
           filepath = path.join(globals.views, filename+'.pug')
+          const pug = require('pug')
+          pug.renderFile(filepath, params, (err, html) => {
+            if(err) throw err;
+            else{
+              res.setHeader('Content-Type', 'text/html')
+              res.statusCode = 200;
+              res.setHeader('Content-Length', html.length);
+            
+              res.send(html)
+
+            }
+          })
           // render for pug
-        }else if(globals['view engine'] == 'handlebars'){
-          filepath = path.join(globals.views, filename+'.handlebars')
-          // render for handlebars
         }else{
           throw new Error("template engine not supported or not specified")
         }

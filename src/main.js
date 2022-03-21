@@ -48,7 +48,7 @@ function NotExpress(){
       ...middleware,
       method: 'GET'
     })
-    
+
   }
   function post(...args){
     let middleware = parseMiddleware(args)
