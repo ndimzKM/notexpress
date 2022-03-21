@@ -1,6 +1,7 @@
 function request(req){
   req.body = parseReqBody(req)
   req.params = parseParams(req)
+  req.baseUrl = req.url
 }
 
 async function parseReqBody(req){

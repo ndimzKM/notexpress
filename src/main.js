@@ -15,6 +15,22 @@ function NotExpress(){
     globals = { ...globals, [key]: value };
   }
 
+  function enable(key){
+    globals[key] = true;
+  }
+
+  function enabled(key){
+    return globals[key] !== undefined;
+  }
+
+  function disable(key){
+    globals[key] = false;
+  }
+
+  function disabled(key){
+    return globals[key] === undefined;
+  }
+
   function use(...args){
     let middleware = parseMiddleware(args)
     //middleware.callbacks = middleware.callbacks[0];
@@ -148,7 +164,11 @@ function NotExpress(){
     put,
     delete: deleteMethod,
     use,
-    set
+    set,
+    enable,
+    enabled,
+    disable,
+    disabled
   }
 }
 
