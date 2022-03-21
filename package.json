@@ -25,7 +25,5 @@
     "nodemon": "^2.0.15",
     "supertest": "^6.2.2"
   },
-  "dependencies": {
-    "pug": "^3.0.2"
-  }
+  "dependencies": {}
 }
