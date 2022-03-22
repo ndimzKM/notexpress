@@ -6,7 +6,7 @@
 ![Version](https://img.shields.io/npm/v/@ndimz/notexpress)
 # notexpress
 
-A small NodeJS framework that is not a replacement of ExpressJS. Just like Express.js, it is unopinionated and minimal and contains less than 30% of the features in Express.js. I only hope the percentage will increase.
+A small NodeJS framework that is not a replacement of ExpressJS. Just like Express.js, it is unopinionated and minimal and contains less than 80% of the features in Express.js. I only hope the percentage will increase.
 
 ```
 const notexpress = require('@ndimz/notexpress')
