@@ -80,7 +80,10 @@ function NotExpress(){
     if(path.includes('?')){
       path = path.split('?')[0]
     }
-    let middle = middlewares.find(m => m.path === path && m.method === method);
+    if(path.match(/\//g).length > 1){
+      path = "/" + path.split('/')[1];
+    }
+    let middle = middlewares.find(m => m.path.split("/:")[0] === path && m.method === method);
     if(middle) return middle;
     return false;
   }
@@ -158,7 +161,7 @@ function NotExpress(){
     }
     let publicFolder = NotExpress.prototype.public
     return http.createServer((req,res) => {
-      request(req)
+      request(req, middlewares)
       response(res, publicFolder, globals)
       requestHandler(req,res)
     }).listen(port, hostname, () => {

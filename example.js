@@ -18,6 +18,12 @@ app.get('/ejs', (req,res) => {
   res.render('test')
 })
 
+
+app.get("/posts/:id/:post", (req,res) => {
+  console.log(req.query)
+  res.end("Testing req.params")
+})
+
 app.get('/hello', testMid ,(req,res) => {
   console.log(req.params)
   res.end("Hi")
