@@ -143,13 +143,25 @@ function NotExpress(){
     //return current.cb(req,res)
   }
 
-  function listen(port, cb){
+  function listen(...args){
+    let hostname, port, cb;
+    if(args.length === 2){
+      hostname = '127.0.0.1'
+      port = args[0];
+      cb = args[1];
+    }else if(args.length === 3){
+      port = args[0];
+      cb = args[2];
+      hostname = args[1]
+    }else{
+      throw new Error('argument count to app.listen() is unaccepted')
+    }
     let publicFolder = NotExpress.prototype.public
     return http.createServer((req,res) => {
       request(req)
       response(res, publicFolder, globals)
       requestHandler(req,res)
-    }).listen(port, () => {
+    }).listen(port, hostname, () => {
       if(cb instanceof Function) return cb()
       else{
         console.log('Server started')

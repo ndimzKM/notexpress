@@ -1,7 +1,10 @@
+const url = require('url')
+
 function request(req){
   req.body = parseReqBody(req)
   req.params = parseParams(req)
-  req.baseUrl = req.url
+  req.baseUrl = req.url.split('?')[0]
+  req.originalUrl = req.url
 }
 
 async function parseReqBody(req){
@@ -21,15 +24,13 @@ async function parseReqBody(req){
 }
 
 function parseParams(req){
-  if(!req.url.includes('?')) return ({});
 
+  const curl = new URL(req.headers.host + req.url);
+  const params = curl.searchParams;
   let parsed = {};
-  let urls = req.url.split('/')[1]
-  urls = urls.split('?')[1]
-  urls = urls.split('&')
 
-  for(let url of urls){
-    parsed[`${url.split('=')[0]}`] = url.split('=')[1];
+  for(key of params.keys()){
+    parsed[key] = params.get(key);
   }
 
   return parsed;

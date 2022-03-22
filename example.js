@@ -19,7 +19,7 @@ app.get('/ejs', (req,res) => {
 })
 
 app.get('/hello', testMid ,(req,res) => {
-  console.log('HI')
+  console.log(req.params)
   res.end("Hi")
 })
 app.post('/hi', (req,res) => {
