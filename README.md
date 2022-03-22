@@ -18,6 +18,15 @@ app.get('/', function (req, res) {
 
 app.listen(5000)
 ```
+
+## Features
+
+- ⚙ Express middleware compatible
+- 🚀 No legacy dependencies, just the JavaScript itself
+- 📦 Lesser bundle size than Express
+
+Visit [notexpress](https://ndimz.gitbook.io/notexpress/) website for documentation.
+
 ## Installation
 
 The only requirement to use notexpress is that you have Node.js installed.
@@ -25,15 +34,9 @@ The only requirement to use notexpress is that you have Node.js installed.
   npm install @ndimz/notexpress
 ```
 
-## Disclaimer ⚠️
+## Disclaimer
 
 This entire project is just a __POK__, __Proof of Knowledge__. If that's even a thing. I am merely experimenting my knowledge of Node.js, thereby attempting to build my own Express. Most of the things you can do with Express are __not yet__ doable. But hopefully, I will fully implement them.
-
-## Features
-
-- ⚙ Express middleware compatible
-- 🚀 No legacy dependencies, just the JavaScript itself
-- 📦 Lesser bundle size than Express
 
 ## License
 
