@@ -11,25 +11,6 @@ function NotExpress(){
     "view engine": ""
   };
 
-  function set(key, value){
-    globals = { ...globals, [key]: value };
-  }
-
-  function enable(key){
-    globals[key] = true;
-  }
-
-  function enabled(key){
-    return globals[key] !== undefined;
-  }
-
-  function disable(key){
-    globals[key] = false;
-  }
-
-  function disabled(key){
-    return globals[key] === undefined;
-  }
 
   function use(...args){
     let middleware = parseMiddleware(args)
@@ -75,6 +56,27 @@ function NotExpress(){
       method: 'DELETE'
     })
   }
+
+  function set(key, value){
+    globals = { ...globals, [key]: value };
+  }
+
+  function enable(key){
+    globals[key] = true;
+  }
+
+  function enabled(key){
+    return globals[key] !== undefined;
+  }
+
+  function disable(key){
+    globals[key] = false;
+  }
+
+  function disabled(key){
+    return globals[key] === undefined;
+  }
+
 
   function getMiddleware(path, method){
     if(path.includes('?')){
@@ -148,16 +150,12 @@ function NotExpress(){
 
   function listen(...args){
     let hostname, port, cb;
-    if(args.length === 2){
-      hostname = '127.0.0.1'
-      port = args[0];
-      cb = args[1];
-    }else if(args.length === 3){
-      port = args[0];
-      cb = args[2];
-      hostname = args[1]
-    }else{
-      throw new Error('argument count to app.listen() is unaccepted')
+    if(args.length > 3) throw new Error("argument count to app.listen() exceeds limit of 3");
+    for(let arg of args){
+      if(typeof(arg) == 'string') hostname = arg;
+      else if(typeof(arg) == 'number') port = arg;
+      else if(arg instanceof Function) cb = arg;
+      else throw new Error('argument type passed to app.listen() not supported');      
     }
     let publicFolder = NotExpress.prototype.public
     return http.createServer((req,res) => {
