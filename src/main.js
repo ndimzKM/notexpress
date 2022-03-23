@@ -149,7 +149,7 @@ function NotExpress(){
   }
 
   function listen(...args){
-    let hostname, port, cb;
+    let hostname = "127.0.0.1", port = 5000, cb;
     if(args.length > 3) throw new Error("argument count to app.listen() exceeds limit of 3");
     for(let arg of args){
       if(typeof(arg) == 'string') hostname = arg;
