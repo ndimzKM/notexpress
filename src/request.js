@@ -6,6 +6,7 @@ function request(req, middlewares){
   req.query = parseQueryParams(req)
   req.params = parseParams(req, middlewares)
   req.originalUrl = req.url
+  req.cookies = parseCookies(req)
 }
 
 async function parseReqBody(req){
@@ -22,6 +23,20 @@ async function parseReqBody(req){
     returnVal = undefined
   }
   return returnVal;
+}
+
+function parseCookies(req){
+  let cookies = {};
+  const header = req.headers?.cookie;
+  if(!header) return cookies;
+
+  header.split(';').forEach(cookie => {
+    let [name, value] = cookie.split('=');
+    name = name.trim();
+    cookies[name] = decodeURIComponent(value);
+  })
+
+  return cookies
 }
 
 function parseParams(req, middlewares){
