@@ -10,7 +10,7 @@ A small NodeJS framework that is not a replacement of ExpressJS. Just like Expre
 
 ```
 const notexpress = require('@ndimz/notexpress')
-const app = notexpress()
+const app = new notexpress()
 
 app.get('/', function (req, res) {
   res.send('Goodday World')
