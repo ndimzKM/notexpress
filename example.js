@@ -1,10 +1,10 @@
-const NotExpress = require('./src/main');
-
-const app = NotExpress()
+const NotExpress = require('./src/index');
+const ApiRoute = require('./routes/api')
+const app = new NotExpress()
 //NotExpress.prototype.static('public')
 app.set("views", __dirname + "/views");
 app.set("view engine", "pug");
-
+app.use('/api', ApiRoute);
 app.use("/hello", (req,res) => {
   console.log('This is app.use()')
 })
@@ -33,13 +33,13 @@ app.post('/hi', (req,res) => {
   console.log(req.params.message)
   res.status(201).json({ message: "Hello" })
 })
-
+/*
 app.delete('/delete', (req,res) => {
   res.status(200).json({
     message: 'Delete success'
   })
 })
-
+*/
 app.put('/put', (req,res) => {
   res.status(200).json({
     message: 'Put success'
