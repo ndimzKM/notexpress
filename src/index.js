@@ -21,11 +21,27 @@ class NotExpress {
     return {
       get: function(...args){
         let route = parseMiddleware(args);
+        route.method = 'GET'
         NotExpress.routes.push(route)
       },
-      post: new Function,
-      put: new Function,
-      del: new Function
+      post: function(...args){
+        let route = parseMiddleware(args);
+        route.method = 'POST'
+        NotExpress.routes.push(route)
+      },
+
+      put: function(...args){
+        let route = parseMiddleware(args);
+        route.method = 'PUT'
+        NotExpress.routes.push(route)
+      },
+
+      del: function(...args){
+        let route = parseMiddleware(args);
+        route.method = 'DELETE'
+        NotExpress.routes.push(route)
+      },
+
     }
   }
 
@@ -33,11 +49,23 @@ class NotExpress {
     if(path.includes('?')){
       path = path.split('?')[0]
     }
+    /*
     if(path.match(/\//g).length > 1){
       path = "/" + path.split('/')[1];
     }
+    */
+
+    //console.log(this.#middlewares)
+    console.log(path)
     let middle = this.#middlewares.find(m => m.path.split("/:")[0] === path && m.method === method);
     if(middle) return middle;
+    else if(middle == undefined){
+      if(path.match(/\//g).length > 1){
+        path = "/" + path.split('/')[1];
+      }
+      let middle = this.#middlewares.find(m => m.path.split("/:")[0] === path && m.method === method);
+      return middle;
+    }
     return false;
   }
 
@@ -91,7 +119,15 @@ class NotExpress {
   }
 
   #routerMiddleware(args){
-    console.log(args);
+    let baseUrl = args[0];
+    NotExpress.routes.forEach(route => {
+      let middleware = {
+        path: baseUrl + route.path,
+        callbacks: route.callbacks,
+        method: route.method
+      }
+      this.#middlewares.push(middleware)
+    })
   }
 
   listen(...args){
