@@ -4,102 +4,78 @@ const request = require('./request')
 const response = require('./response')
 const { parseMiddleware } = require('../lib/utils')
 
-function NotExpress(){
-  let middlewares = [];
-  let globals = {
-    views: "",
-    "view engine": ""
-  };
+class NotExpress {
+  #middlewares;
+  #globals;
+  static routes = [];
 
-
-  function use(...args){
-    let middleware = parseMiddleware(args)
-    //middleware.callbacks = middleware.callbacks[0];
-    if(middleware.path == undefined) middleware.path = "*"
-    middlewares.push({
-      ...middleware,
-      method: null
-    })
+  constructor(){
+    this.#middlewares = [];
+    this.#globals = {
+      views:"",
+      "view engine": ""
+    };
   }
 
-  function get(...args){
-    let middleware = parseMiddleware(args)
-    
-    middlewares.push({
-      ...middleware,
-      method: 'GET'
-    })
+  static Router(){
+    return {
+      get: function(...args){
+        let route = parseMiddleware(args);
+        route.method = 'GET'
+        NotExpress.routes.push(route)
+      },
+      post: function(...args){
+        let route = parseMiddleware(args);
+        route.method = 'POST'
+        NotExpress.routes.push(route)
+      },
 
-  }
-  function post(...args){
-    let middleware = parseMiddleware(args)
+      put: function(...args){
+        let route = parseMiddleware(args);
+        route.method = 'PUT'
+        NotExpress.routes.push(route)
+      },
 
-    middlewares.push({
-      ...middleware,
-      method: 'POST'
-    })
-  }
+      del: function(...args){
+        let route = parseMiddleware(args);
+        route.method = 'DELETE'
+        NotExpress.routes.push(route)
+      },
 
-  function put(...args){
-    let middleware = parseMiddleware(args)
-
-    middlewares.push({
-      ...middleware,
-      method: 'PUT'
-    })
-  }
-
-  function deleteMethod(...args){
-    let middleware = parseMiddleware(args)
-    middlewares.push({
-      ...middleware,
-      method: 'DELETE'
-    })
+    }
   }
 
-  function set(key, value){
-    globals = { ...globals, [key]: value };
-  }
-
-  function enable(key){
-    globals[key] = true;
-  }
-
-  function enabled(key){
-    return globals[key] !== undefined;
-  }
-
-  function disable(key){
-    globals[key] = false;
-  }
-
-  function disabled(key){
-    return globals[key] === undefined;
-  }
-
-
-  function getMiddleware(path, method){
+  #getMiddleware(path, method){
     if(path.includes('?')){
       path = path.split('?')[0]
     }
+    /*
     if(path.match(/\//g).length > 1){
       path = "/" + path.split('/')[1];
     }
-    let middle = middlewares.find(m => m.path.split("/:")[0] === path && m.method === method);
+    */
+
+    //console.log(this.#middlewares)
+    console.log(path)
+    let middle = this.#middlewares.find(m => m.path.split("/:")[0] === path && m.method === method);
     if(middle) return middle;
+    else if(middle == undefined){
+      if(path.match(/\//g).length > 1){
+        path = "/" + path.split('/')[1];
+      }
+      let middle = this.#middlewares.find(m => m.path.split("/:")[0] === path && m.method === method);
+      return middle;
+    }
     return false;
   }
 
-  function getUseMethods(){
-    return middlewares.filter(m => m.method === null);
+  #getUseMethods(){
+    return this.#middlewares.filter(m => m.method === null);
   }
 
-  function requestHandler(req, res){
-    //console.log(req.method, req.url)
-    //middleware[0].cb(req,res);
-    //console.log(middleware)
-    const current = getMiddleware(req.url, req.method);
-    const useMethods = getUseMethods()
+  #requestHandler(req,res){
+    const current = this.#getMiddleware(req.url, req.method);
+    const useMethods = this.#getUseMethods()
     if(current === false){
       res.status(404).json({
         message:"Route not found"
@@ -140,15 +116,21 @@ function NotExpress(){
         })
         
     }
-    
-    /*
-    req.body.then(data => {
-      return current.cb(req,res)
-    })*/
-    //return current.cb(req,res)
   }
 
-  function listen(...args){
+  #routerMiddleware(args){
+    let baseUrl = args[0];
+    NotExpress.routes.forEach(route => {
+      let middleware = {
+        path: baseUrl + route.path,
+        callbacks: route.callbacks,
+        method: route.method
+      }
+      this.#middlewares.push(middleware)
+    })
+  }
+
+  listen(...args){
     let hostname = "127.0.0.1", port = 5000, cb;
     if(args.length > 3) throw new Error("argument count to app.listen() exceeds limit of 3");
     for(let arg of args){
@@ -159,9 +141,9 @@ function NotExpress(){
     }
     let publicFolder = NotExpress.prototype.public
     return http.createServer((req,res) => {
-      request(req, middlewares)
-      response(res, publicFolder, globals)
-      requestHandler(req,res)
+      request(req, this.#middlewares)
+      response(res, publicFolder, this.#globals)
+      this.#requestHandler(req,res)
     }).listen(port, hostname, () => {
       if(cb instanceof Function) return cb()
       else{
@@ -170,23 +152,75 @@ function NotExpress(){
     })
   }
 
-  return {
-    listen,
-    get,
-    post,
-    put,
-    delete: deleteMethod,
-    use,
-    set,
-    enable,
-    enabled,
-    disable,
-    disabled
+  use(...args){
+    if(args.length == 2 && typeof(args[1]) == 'object'){
+      this.#routerMiddleware(args)
+    }else {
+      let middleware = parseMiddleware(args)
+      //middleware.callbacks = middleware.callbacks[0];
+      if(middleware.path == undefined) middleware.path = "*"
+      this.#middlewares.push({
+        ...middleware,
+        method: null
+      })
+    }
   }
+
+  get(...args){
+    let middleware = parseMiddleware(args)
+    
+    this.#middlewares.push({
+      ...middleware,
+      method: 'GET'
+    })
+
+  }
+  post(...args){
+    let middleware = parseMiddleware(args)
+
+    this.#middlewares.push({
+      ...middleware,
+      method: 'POST'
+    })
+  }
+
+  put(...args){
+    let middleware = parseMiddleware(args)
+
+    this.#middlewares.push({
+      ...middleware,
+      method: 'PUT'
+    })
+  }
+
+  del(...args){
+    let middleware = parseMiddleware(args)
+    this.#middlewares.push({
+      ...middleware,
+      method: 'DELETE'
+    })
+  }
+
+  set(key, value){
+    this.#globals = { ...this.#globals, [key]: value };
+  }
+
+  enable(key){
+    this.#globals[key] = true;
+  }
+
+  enabled(key){
+    return this.#globals[key] !== undefined;
+  }
+
+  disable(key){
+    this.#globals[key] = false;
+  }
+
+  disabled(key){
+    return this.#globals[key] === undefined;
+  }
+
 }
 
-NotExpress.prototype.static = function(dirname){
-  NotExpress.prototype.public = path.join(__dirname, '../',dirname);
-}
-
-module.exports = NotExpress
+module.exports = NotExpress;
