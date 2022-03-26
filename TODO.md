@@ -8,7 +8,7 @@
    // 'text/plain'
 2. req.accepts('html')
    // checks if Accept header from request contains specified field
-3. req.is('html')
+3. req.is('html') [DONE]
    //same as abov, but for content-type
 4.
 
