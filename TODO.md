@@ -4,7 +4,7 @@
 
 ## Methods
 
-1. req.get('Content-Type')
+1. req.get('Content-Type') [DONE]
    // 'text/plain'
 2. req.accepts('html')
    // checks if Accept header from request contains specified field
