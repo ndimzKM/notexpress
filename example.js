@@ -26,6 +26,7 @@ app.get("/posts/:id/:post", (req, res) => {
 app.get("/hello", testMid, (req, res) => {
   console.log(req.params);
   console.log("Request header: ", req.get("content-TyPe"));
+  console.log(`req.is(): ${req.is("json")}`);
   res.end("Hi");
 });
 app.post("/hi", (req, res) => {

@@ -10,6 +10,22 @@ function request(req, middlewares) {
   req.get = function (header) {
     return req.headers[header.toLowerCase()];
   };
+  req.is = function (contentType) {
+    if (contentType.includes("*")) {
+      let checked = "";
+      if (contentType.indexOf("*") == 0) {
+        checked = contentType.slice(1);
+      } else {
+        checked = contentType.slice(0, -1);
+      }
+
+      if (req.headers["content-type"].includes(checked)) return contentType;
+      return false;
+    } else {
+      if (req.headers["content-type"].includes(contentType)) return contentType;
+      return false;
+    }
+  };
 }
 
 async function parseReqBody(req) {
