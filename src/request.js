@@ -10,6 +10,23 @@ function request(req, middlewares) {
   req.get = function (header) {
     return req.headers[header.toLowerCase()];
   };
+  req.accepts = function (type) {
+    if (type.includes("*")) {
+      let checked = "";
+      if (type.indexOf("*") == 0) {
+        checked = contentType.slice(1);
+      } else {
+        checked = contentType.slice(0, -1);
+      }
+
+      if (req.headers["accept"]?.includes(checked)) return type;
+      return false;
+    } else {
+      if (req.headers["accept"]?.includes(type)) return type;
+      return false;
+    }
+  };
+
   req.is = function (contentType) {
     if (contentType.includes("*")) {
       let checked = "";
