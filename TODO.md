@@ -14,12 +14,10 @@
 
 ## Properties
 
-1. req.ip
-2. req.method
-   // HTTP method of request
-3. req.protocol
+1. req.ip [DONE]
+2. req.protocol [DONE]
    // returns 'http' or 'https' e.t.c
-4. req.secure
+3. req.secure [DONE]
    // returns req.protocol === 'https'
 
 # Response
