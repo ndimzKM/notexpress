@@ -1,8 +1,11 @@
 const url = require("url");
 
 function request(req, middlewares) {
+  req.ip = req.socket.remoteAddress;
   req.body = parseReqBody(req);
   req.baseUrl = "/" + req.url.split("/")[1];
+  req.protocol = req.headers["x-forwarded-proto"];
+  req.secure = req.protocol == "https";
   req.query = parseQueryParams(req);
   req.params = parseParams(req, middlewares);
   req.originalUrl = req.url;
