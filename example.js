@@ -18,6 +18,10 @@ app.get("/ejs", (req, res) => {
   res.render("test");
 });
 
+app.get("/hi", (req, res) => {
+  res.end("HI [GET]");
+});
+
 app.get("/posts/:id/:post", (req, res) => {
   console.log(req.query);
   res.end("Testing req.params");
@@ -27,6 +31,7 @@ app.get("/hello", testMid, (req, res) => {
   console.log(req.params);
   console.log("Request header: ", req.get("content-TyPe"));
   //console.log(`req.accepts(): ${req.accepts("json")}`);
+  res.redirect("/posts/12/posts/12");
   res.end("Hi");
 });
 app.post("/hi", (req, res) => {
