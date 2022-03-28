@@ -20,6 +20,12 @@ function response(res, publicFolder, globals) {
     return res.headers[header.toLowerCase()];
   };
 
+  res.location = function (addr) {
+    let field = addr;
+    if (field == "back") field = res.headers["referer"] || "/";
+    res.setHeader("Location", addr);
+  };
+
   res.cookie = function (...args) {
     let cookieName,
       cookieValue,

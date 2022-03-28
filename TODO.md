@@ -26,9 +26,9 @@
 
 1. res.append('Content-Type', 'application/json')
    // appends value to header. creates it if it does not exist
-2. res.get('Content-Type')
+2. res.get('Content-Type') [DONE]
    // gets http response headers
-3. res.location('http://foo.bar')
+3. res.location('http://foo.bar') [DONE]
    // Sets the response Location HTTP header
 4. res.redirect(status, path)
    // redirection
