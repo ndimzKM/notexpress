@@ -26,6 +26,14 @@ function response(res, publicFolder, globals) {
     res.setHeader("Location", addr);
   };
 
+  res.redirect = function (...args) {
+    if (args.length == 2) {
+      res.writeHead(args[0], { Location: args[1] });
+    } else {
+      res.writeHead(301, { Location: args[0] });
+    }
+  };
+
   res.cookie = function (...args) {
     let cookieName,
       cookieValue,

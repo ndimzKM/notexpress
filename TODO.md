@@ -30,7 +30,7 @@
    // gets http response headers
 3. res.location('http://foo.bar') [DONE]
    // Sets the response Location HTTP header
-4. res.redirect(status, path)
+4. res.redirect(status, path) [DONE]
    // redirection
 5. res.set(object or key/value pair)
    // sets the response’s HTTP header field to value.
