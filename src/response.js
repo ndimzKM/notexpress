@@ -16,6 +16,9 @@ function response(res, publicFolder, globals) {
     res.statusCode = Number(code);
     return res;
   };
+  res.get = function (header) {
+    return res.headers[header.toLowerCase()];
+  };
 
   res.cookie = function (...args) {
     let cookieName,
