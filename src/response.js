@@ -20,6 +20,18 @@ function response(res, publicFolder, globals) {
     return res.headers[header.toLowerCase()];
   };
 
+  res.set = function (...args) {
+    if (args.length == 2) {
+      res.setHeader(args[0], args[1]);
+    } else if (args.length == 1 && typeof (args[0] == "object")) {
+      for (let key of Object.keys(args)) {
+        res.setHeader(key, args[0][key]);
+      }
+    } else {
+      throw new Error("invalid argument passed.");
+    }
+  };
+
   res.location = function (addr) {
     let field = addr;
     if (field == "back") field = res.headers["referer"] || "/";
