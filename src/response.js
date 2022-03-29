@@ -32,6 +32,16 @@ function response(res, publicFolder, globals) {
     }
   };
 
+  res.append = function (name, value) {
+    if (typeof value != "string")
+      throw new Error("value argument must be of type string");
+    if (res.headers[name.toLowerCase()] == undefined) {
+      res.setHeader(name, value);
+    } else {
+      res.headers[name.toLowerCase()] += value;
+    }
+  };
+
   res.location = function (addr) {
     let field = addr;
     if (field == "back") field = res.headers["referer"] || "/";
