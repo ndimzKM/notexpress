@@ -24,7 +24,7 @@
 
 ## Methods
 
-1. res.append('Content-Type', 'application/json')
+1. res.append('Content-Type', 'application/json') [DONE]
    // appends value to header. creates it if it does not exist
 2. res.get('Content-Type') [DONE]
    // gets http response headers
