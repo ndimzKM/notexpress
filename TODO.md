@@ -32,6 +32,6 @@
    // Sets the response Location HTTP header
 4. res.redirect(status, path) [DONE]
    // redirection
-5. res.set(object or key/value pair)
+5. res.set(object or key/value pair) [DONE]
    // sets the response’s HTTP header field to value.
 6.
