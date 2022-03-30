@@ -1,4 +1,5 @@
 const EventEmitter = require("events");
+const path = require("path");
 const http = require("http");
 const request = require("./request");
 const response = require("./response");
@@ -9,6 +10,7 @@ class NotExpress {
   #globals;
   #counter;
   #eventEmitter;
+  #staticPath;
   static routes = [];
 
   constructor() {
@@ -19,6 +21,11 @@ class NotExpress {
     };
     this.#counter = 0;
     this.#eventEmitter = new EventEmitter();
+    this.#staticPath = "";
+  }
+
+  static static(dirname) {
+    this.#staticPath = dirname;
   }
 
   static Router() {
@@ -71,8 +78,9 @@ class NotExpress {
       let middle = this.#middlewares.find(
         (m) => m.path.split("/:")[0] === path && m.method === method
       );
-      return middle;
+      if (middle) return middle;
     }
+
     return false;
   }
 
@@ -106,7 +114,7 @@ class NotExpress {
           current.callbacks[this.#counter](req, res, next);
       });
 
-      if (current.callbacks.length > 1) {
+      if (current?.callbacks.length > 1) {
         req.body.then((data) => {
           req.body = data;
           if (this.#counter < current.callbacks.length - 1)
@@ -117,7 +125,7 @@ class NotExpress {
           }
         });
       } else {
-        current.callbacks[0](req, res);
+        current?.callbacks[0](req, res);
       }
       /*
       if (current.callbacks.length > 1) {
@@ -165,11 +173,10 @@ class NotExpress {
       else
         throw new Error("argument type passed to app.listen() not supported");
     }
-    let publicFolder = NotExpress.prototype.public;
     return http
       .createServer((req, res) => {
         request(req, this.#middlewares);
-        response(res, publicFolder, this.#globals);
+        response(res, this.#staticPath, this.#globals);
         this.#requestHandler(req, res);
       })
       .listen(port, hostname, () => {
@@ -183,6 +190,8 @@ class NotExpress {
   use(...args) {
     if (args.length == 2 && typeof args[1] == "object") {
       this.#routerMiddleware(args);
+    } else if (args.length == 1) {
+      console.log(typeof args[0]);
     } else {
       let middleware = parseMiddleware(args);
       //middleware.callbacks = middleware.callbacks[0];

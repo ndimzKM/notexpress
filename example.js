@@ -5,6 +5,7 @@ const app = new NotExpress();
 app.set("views", __dirname + "/views");
 app.set("view engine", "pug");
 app.use("/api", ApiRoute);
+app.use(NotExpress.static(__dirname + "public"));
 app.use("/hello", (req, res) => {
   console.log("This is app.use()");
 });

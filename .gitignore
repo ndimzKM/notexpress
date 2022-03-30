@@ -3,3 +3,4 @@ routes/
 TODO.md
 .prettierrc.json
 .prettierignore
+public/
