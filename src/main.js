@@ -10,7 +10,7 @@ class NotExpress {
   #globals;
   #counter;
   #eventEmitter;
-  #staticPath;
+  static staticPath;
   static routes = [];
 
   constructor() {
@@ -21,11 +21,11 @@ class NotExpress {
     };
     this.#counter = 0;
     this.#eventEmitter = new EventEmitter();
-    this.#staticPath = "";
+    this.staticPath = "";
   }
 
   static static(dirname) {
-    this.#staticPath = dirname;
+    this.staticPath = dirname;
   }
 
   static Router() {
