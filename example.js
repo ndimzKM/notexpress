@@ -11,7 +11,13 @@ app.use("/hello", (req, res) => {
 
 // next param is apparently useless right now
 function testMid(req, res, next) {
-  console.log(req.body);
+  console.log("This is req.body ", req.body);
+  next();
+}
+
+function anotherOne(req, res, next) {
+  console.log("another middleware");
+  next();
 }
 
 app.get("/ejs", (req, res) => {
@@ -22,16 +28,17 @@ app.get("/hi", (req, res) => {
   res.end("HI [GET]");
 });
 
-app.get("/posts/:id/:post", (req, res) => {
-  console.log(req.query);
+app.get("/posts/:id/:post", anotherOne, (req, res) => {
+  console.log("May have been redirected here");
   res.end("Testing req.params");
 });
 
-app.get("/hello", testMid, (req, res) => {
+app.get("/hello", testMid, anotherOne, (req, res) => {
   console.log(req.params);
   console.log("Request header: ", req.get("content-TyPe"));
   //console.log(`req.accepts(): ${req.accepts("json")}`);
   res.redirect("/posts/12/posts/12");
+  console.log("This should be the end");
   res.end("Hi");
 });
 app.post("/hi", (req, res) => {

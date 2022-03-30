@@ -1,4 +1,4 @@
-const path = require("path");
+const EventEmitter = require("events");
 const http = require("http");
 const request = require("./request");
 const response = require("./response");
@@ -7,6 +7,8 @@ const { parseMiddleware } = require("../lib/utils");
 class NotExpress {
   #middlewares;
   #globals;
+  #counter;
+  #eventEmitter;
   static routes = [];
 
   constructor() {
@@ -15,6 +17,8 @@ class NotExpress {
       views: "",
       "view engine": "",
     };
+    this.#counter = 0;
+    this.#eventEmitter = new EventEmitter();
   }
 
   static Router() {
@@ -93,12 +97,29 @@ class NotExpress {
           continue;
         }
       }
-      let currentMidCounter = 0;
-
       const next = () => {
-        currentMidCounter += 1;
+        this.#eventEmitter.emit("next");
       };
+      this.#eventEmitter.on("next", () => {
+        this.#counter += 1;
+        if (this.#counter < current.callbacks.length)
+          current.callbacks[this.#counter](req, res, next);
+      });
 
+      if (current.callbacks.length > 1) {
+        req.body.then((data) => {
+          req.body = data;
+          if (this.#counter < current.callbacks.length - 1)
+            current.callbacks[this.#counter](req, res, next);
+          else {
+            let finalCallback = current.callbacks.slice(-1)[0];
+            finalCallback(req, res);
+          }
+        });
+      } else {
+        current.callbacks[0](req, res);
+      }
+      /*
       if (current.callbacks.length > 1) {
         for (let i = 0; i < current.callbacks.length - 1; i++) {
           if (currentMidCounter < current.callbacks.length) {
@@ -109,13 +130,13 @@ class NotExpress {
           }
         }
       }
-
       req.body.then((data) => {
         req.body = data;
         let finalCallback = current.callbacks.slice(-1)[0];
         finalCallback(req, res);
         //return current.callbacks[-1](req,res);
       });
+      */
     }
   }
 
