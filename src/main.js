@@ -176,7 +176,7 @@ class NotExpress {
     return http
       .createServer((req, res) => {
         request(req, this.#middlewares);
-        response(res, this.#staticPath, this.#globals);
+        response(res, this.staticPath, this.#globals);
         this.#requestHandler(req, res);
       })
       .listen(port, hostname, () => {
