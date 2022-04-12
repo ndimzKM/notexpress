@@ -6,7 +6,7 @@
 
 # notexpress
 
-A small NodeJS framework that is not a replacement of ExpressJS. Just like Express.js, it is unopinionated and minimal and contains up to 80% of the features in Express.js. I only hope the percentage will increase.
+A small NodeJS framework that is not a replacement of ExpressJS. Just like Express.js, it is unopinionated and minimal and contains up to 95% of the features in Express.js. I only hope the percentage will increase.
 
 ```
 const notexpress = require('@ndimz/notexpress')
