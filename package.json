@@ -1,6 +1,6 @@
 {
   "name": "@ndimz/notexpress",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A small NodeJS framework based on Express",
   "main": "./src/main.js",
   "repository": {
