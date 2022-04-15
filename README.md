@@ -36,10 +36,6 @@ The only requirement to use notexpress is that you have Node.js installed.
   npm install @ndimz/notexpress
 ```
 
-## Disclaimer
-
-This entire project is just a **POK**, **Proof of Knowledge**. If that's even a thing. I am merely experimenting my knowledge of Node.js, thereby attempting to build my own Express. Most of the things you can do with Express are **not yet** doable. But hopefully, I will fully implement them.
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
