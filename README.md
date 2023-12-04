@@ -1,5 +1,3 @@
-![Logo](https://github.com/ndimzKM/notexpress/blob/main/src/logo.png?raw=true)
-
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 ![GitHub code size](https://img.shields.io/github/languages/code-size/ndimzKM/notexpress)
 ![Version](https://img.shields.io/npm/v/@ndimz/notexpress)
